@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f7fa; /* สีพื้นหลังธีมธรรมชาติ */
+        }
+        .container {
+            text-align: center;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .time {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #00796b; /* สีข้อความธีมธรรมชาติ */
+        }
+        .label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #00796b; /* สีข้อความธีมธรรมชาติ */
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .back {
+            background-color: #f44336;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const timeString = `${hours}:${minutes} ${ampm}`;
+            document.querySelector('.time').textContent = timeString;
+        }
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+
+        function submitTime() {
+            const employeeId = document.querySelector('input[type="text"]').value;
+            if (employeeId) {
+                document.querySelector('.container').innerHTML = `
+                    <div class="time"></div>
+                    <div class="label">ยืนยันการลงเวลา</div>
+                    <div>${employeeId}</div>
+                    <button class="back" onclick="window.location.reload()">ย้อนกลับ</button>
+                `;
+                updateTime();
+            } else {
+                alert('กรุณากรอกรหัสพนักงาน');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="time"></div>
+        <div class="label">กรอกรหัสพนักงาน</div>
+        <input type="text" placeholder="รหัสพนักงาน">
+        <button class="submit" onclick="submitTime()">ลงเวลา</button>
+        <button class="back" onclick="window.location.reload()">ย้อนกลับ</button>
+    </div>
+</body>
+</html>
